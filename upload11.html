@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr" color-mode="dark"> <!--light-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumettre music</title>
+    <link rel="stylesheet" href="./css/mvp.css">
+    <script src="./vue/vue.global.js"></script>
+    <style>
+        body{
+            margin: 3rem;
+            padding: 3rem;
+        }
+
+        input[type="submit"] {
+            background-color: blue;
+        }
+
+        /* The alert message box */
+        .alert {
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .alert-danger {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+
+        .alert-success {
+            background-color: #1344caa8; /* Red */
+            color: white;
+        }
+        
+        /* The close button */
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-if="loader" class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div v-if="success_message" class="alert alert-success">
+            <span class="closebtn" @click="CloseAlert('success')">&times;</span>
+            <strong>{{ success_message }}</strong>
+        </div>
+        <div v-if="danger_message" class="alert alert-danger">
+            <span class="closebtn" @click="CloseAlert('danger')">&times;</span>
+            {{ danger_message }}
+        </div>
+        <form v-if="!loader" @submit.prevent="onSubmit">
+            <div>
+                <label for="music">Sélectionner les songs à ajouter a la playlist</label>
+                <input type="file" accept="audio/*" multiple v-on:change="uploadFile($event)" id="music">
+                <br>
+                <input v-if="show_sumit" type="submit" value="Envoyer">
+            </div>
+        </form>
+    </div>
+
+    <script src="./vue/axios.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return {
+                    songs: null,
+                    loader : false,
+                    success_message: null,
+                    danger_message: null,
+                    show_sumit: false
+                }
+            },
+            methods: {
+                async onSubmit(){
+                    this.loader = true;
+                    this.show_sumit = false;
+                    
+                    axios({
+                        method: 'post',
+                        url: 'http://laravel9-music-api.test/api/music',
+                        data: this.songs
+                    })
+                    .then(function (response) {
+                        var data = JSON.stringify(response.data)
+                        if(data.success == true) {
+                            this.success_message = data.message;
+                        }
+                        this.loader = false;
+                    })
+                    .catch(function (error) {
+                        var err = JSON.stringify(error)
+
+                        if(err.success == false) {
+                            this.danger_message = (err.message)
+                        }
+                        this.loader = false;
+                    });
+                    
+                },
+                uploadFile(evnt){
+                    console.clear();
+                    const fileMusic = evnt.target.files;
+                    var data = new FormData();
+                    for (let i = 0; i < fileMusic.length - 1; i++) {
+                        data.append('songs[]', fileMusic[i]);
+                    }
+                    this.songs = data;
+                    if(fileMusic.length > 0) {
+                        this.show_sumit = true
+                    }
+                },
+                CloseAlert(str) {
+                    if(str == 'success') {
+                        this.success_message = null
+                    }
+                    if(str == 'danger') {
+                        this.danger_message = null
+                    }
+                }
+            }
+        });
+        const vm = app.mount("#app");
+    </script>
+</body>
+</html>

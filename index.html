@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr" color-mode="user">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev master Player</title>
+    <link rel="stylesheet" href="./css/music.css" />
+    <link rel="stylesheet" href="./css/all.css" />
+    <script src="./vue/vue.global.min.js"></script>
+    <style>
+      .rea {
+        width: 43px !important;
+        height: 43px !important;
+        font-size: 43px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="wrapper">
+      <div class="top-bar">
+        <i class="fas fa-angle-down"></i>
+        <span>Lecture en cours</span>
+        <i class="fas fa-ellipsis-h"></i>
+      </div>
+      <div class="img-area">
+        <img v-if="music_length" :src="songs[now_playing.playing_id].artwork" :alt="songs[now_playing.playing_id].title" />
+      </div>
+      <div v-if="music_length" class="song-details">
+        <p class="name" v-text="songs[now_playing.playing_id].title"></p>
+        <p class="artist" v-text="songs[now_playing.playing_id].artist.name"></p>
+      </div>
+      <div class="progress-area" @click="anvancerSong($event)">
+        <div class="progress-bar" :style="'width: '+now_playing.width+'%; !important'">
+          <audio id="main-audio" src=""></audio>
+        </div>
+        <div v-if="music_length" class="song-timer">
+          <span class="current-time" v-text="now_playing.minutes"></span>
+          <span class="max-duration" v-text="songs[now_playing.playing_id].playtime"></span>
+        </div>
+      </div>
+      <div class="controls">
+        <i v-show="now_playing.repeat_type == 'repeat'"  @click="changeRepeatType" id="repeat-plist" class="fas fa-repeat rea" title="Liste de lecture en boucle"></i>
+        <i v-show="now_playing.repeat_type == 'repeat_one'" @click="changeRepeatType" id="repeat-plist" class="fas fa-repeat-1-alt rea" title="Chanson en boucle"></i>
+        <i v-show="now_playing.repeat_type == 'shuffle'" @click="changeRepeatType" id="repeat-plist" class="fas fa-random rea" title="Lecture aléatoire"></i>
+        <i id="prev" @click="prevMusic" class="fas fa-step-backward"></i>
+        <div class="play-pause">
+          <i v-show="!now_playing.is_play" @click="playSong" class="fas fa-play-circle play"></i>
+          <i v-show="now_playing.is_play" @click="pauseSong" class="fas fa-pause-circle play"></i>
+        </div>
+        <i id="next" @click="nextMusic" class="fas fa-step-forward rea"></i>
+        <i id="more-music" @click="showMusicList" class="fas fa-list-music rea"></i>
+      </div>
+      <div :class="'music-list '+now_playing.show_music_list">
+        <div class="header">
+          <div class="row">
+            <i class="list fas fa-list-music"></i>
+            <span>Liste de musique</span>
+          </div>
+          <i id="close" @click="hideMusicList" class="fas fa-times"></i>
+        </div>
+        <ul>
+          <li v-for="(song, index) in songs" :key="song.id" :li-index="song.id" @click="playingSong(index)">
+            <div class="row">
+              <span>{{ song.title }}</span>
+              <p>{{ song.artist.name }}</p>
+            </div>
+            <span v-show="index == now_playing.playing_id" :id="song.class" class="audio-duration">Playing</span>
+            <span v-show="index != now_playing.playing_id" :id="song.class" class="audio-duration">{{ song.playtime }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="./vue/axios.js" defer></script>
+    <script src="./index.js" defer></script>
+  </body>
+</html>

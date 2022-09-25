@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr" color-mode="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev master Player</title>
+    <link rel="stylesheet" href="./css/mvp.css" />
+    <link rel="stylesheet" href="./vue/sweetalert2.css" />
+    <style>
+        body{
+            margin: 3rem;
+            padding: 3rem;
+        }
+        
+        input[type="submit"] {
+            background-color: blue;
+        }
+        
+        /* The alert message box */
+        .alert {
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .alert-danger {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+        
+        .alert-success {
+            background-color: #1344caa8; /* Red */
+            color: white;
+        }
+        
+        /* The close button */
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+    <script src="./vue/vue.global.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        <div v-show="loader" class="lds-roller">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+
+        <div v-show="errs.active" class="alert alert-danger">
+            <span class="closebtn" @click="CloseAlert">&times;</span>
+            <h3><strong>{{ errs.message }}</strong></h3>
+            <ul>
+                <li v-for="(err, index) in errs.data" :key="index">{{ err }}</li>
+            </ul>
+            <br>
+        </div>
+
+        <form v-if="!loader" @submit.prevent="sendFiles">
+            <div>
+                <label for="music">Sélectionner les songs à ajouter a la playlist</label>
+                <input type="file" accept="audio/*" multiple v-on:change="uploadFile($event)" id="music">
+                <small>le nombre de songs ne dois pas dépasser 20 songs</small>
+                <br>
+                <input v-if="show_sumit" type="submit" value="Envoyer">
+            </div>
+        </form>
+
+    </div>
+
+    <script src="./vue/sweetalert2.all.js"></script>
+    <script src="./vue/sweetalert2.js"></script>
+    <script src="./vue/axios.js" defer></script>
+    <script src="./upload.js" defer></script>
+  </body>
+</html>

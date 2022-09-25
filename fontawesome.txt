@@ -1,0 +1,62 @@
+
+
+fas, fal, fad, far, fab
+--------------------------------------------------------------------------------------------------------------------------
+<i class="fas fa-angle-down"></i> => <i class="material-icons">expand_more</i>
+
+<i class="fas fa-ellipsis-h"></i> => <i class="material-icons">more_horiz</i>
+
+<i class="far fa-ellipsis-h"></i> => <i class="material-icons">more_horiz</i>
+
+<i class="fas fa-repeat"></i>  => <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
+
+<i class="fas fa-repeat-alt"></i> => <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
+
+<i class="fas fa-repeat-1-alt"></i>  => <i id="repeat-plist" class="material-icons" title="Song looped">repeat_one</i>
+
+<i class="fas fa-repeat-1"></i>  => <i id="repeat-plist" class="material-icons" title="Song looped">repeat_one</i>
+
+<i class="fas fa-random"></i> => <i id="repeat-plist" class="material-icons" title="Playback shuffled">shuffle</i>
+
+<i class="fal fa-random"></i>  => <i id="repeat-plist" class="material-icons" title="Playback shuffled">shuffle</i>
+
+<i class="fas fa-step-backward"></i> => <i id="prev" class="material-icons">skip_previous</i>
+
+<i class="fas fa-step-forward"></i> => <i id="next" class="material-icons">skip_next</i>
+
+<i class="fas fa-pause"></i>  => <i class="material-icons play">pause</i>
+
+<i class="fas fa-pause-circle"></i>  => <i class="material-icons play">pause</i>
+
+<i class="far fa-pause-circle"></i>  => <i class="material-icons play">pause</i>
+
+<i class="fas fa-play"></i>  => <i class="material-icons play">play_arrow</i>
+
+<i class="fad fa-play"></i>  => <i class="material-icons play">play_arrow</i>
+
+<i class="far fa-play-circle"></i>  => <i class="material-icons play">play_arrow</i>
+
+<i class="fas fa-list-music"></i> => <i id="more-music" class="material-icons">queue_music</i>
+
+<i class="fad fa-list-music"></i>  => <i class="list material-icons">queue_music</i>
+
+<i class="fas fa-times"></i>  => <i id="close" class="material-icons">close</i>
+
+<i class="fas fa-times-square"></i>  => <i id="close" class="material-icons">close</i>
+
+<i class="fas fa-times-octagon"></i>  => <i id="close" class="material-icons">close</i>
+
+<i class="fas fa-times-hexagon"></i>  => <i id="close" class="material-icons">close</i>
+
+<i class="fas fa-times-circle"></i>  => <i id="close" class="material-icons">close</i>
+
+----------------------------------------------------------------------------------------------------
+
+
+Song looped => Chanson en boucle
+
+Playback shuffled => Lecture aléatoire
+
+Playlist looped => Liste de lecture en boucle
+
+
